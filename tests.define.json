@@ -1,0 +1,18 @@
+{
+    "tests": [
+        {
+            "method": "",
+            "url": "",
+            "payload": "escaped body jsononly",
+            "action": "save_cookie",
+            "expected": "200"
+        },
+        {
+            "method": "",
+            "url": "",
+            "payload": "escaped body jsononly",
+            "action": "",
+            "expected": "400"
+        }
+    ]
+}
