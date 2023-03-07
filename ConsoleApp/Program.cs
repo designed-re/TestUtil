@@ -4,13 +4,12 @@ namespace ConsoleApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.WriteLine("Loading tests.json");
             Runner runner = new Runner();
-            runner.Test();
             runner.Load();
-            runner.Test();
+            await runner.Test();
         }
     }
 }

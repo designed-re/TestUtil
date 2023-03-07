@@ -20,9 +20,19 @@ namespace TestUtilLib
             if (!load) throw new Exception("failed to load test definition");
         }
 
-        public void Test()
+        public async Task Test()
         {
-            Console.WriteLine(_parser.GetTests().ToJson());
+            TestDefine tests = _parser.GetTests();
+            Requester requester = new(tests.BaseURL);
+            int i = 1;
+            foreach (var test in tests.Tests)
+            {
+                Console.WriteLine($"Performing {i++} of {tests.Tests.Count} Tests");
+                Console.WriteLine("\tPerforming request");
+                bool res = await requester.PerformRequestAsync(test);
+                Console.WriteLine($"\tResult: {res}");
+            }
+            Console.WriteLine("Test completed.");
         }
     }
 }

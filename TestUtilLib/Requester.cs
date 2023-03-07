@@ -46,18 +46,28 @@ namespace TestUtilLib
 
         private async Task<bool> perform(Test test)
         {
-            RestResponse response = await sendRequest(test);
-            switch (test.Action)
+            try
             {
-                case ActionTypes.None:
-                default:
-                    break;
-                case ActionTypes.SaveCookie:
-                    _client.CookieContainer.SetCookies(new Uri(new Uri(_baseUrl), test.Url), response.Headers.FirstOrDefault(x=> x.Name.ToLower() == "cookies").Value.ToString() ?? string.Empty); //todo wrong?
-                    break;
-            }
+                RestResponse response = await sendRequest(test);
+                switch (test.Action)
+                {
+                    case ActionTypes.None:
+                    default:
+                        break;
+                    case ActionTypes.SaveCookie:
+                        _client.CookieContainer.SetCookies(new Uri(new Uri(_baseUrl), test.Url),
+                            response.Headers.FirstOrDefault(x => x.Name.ToLower() == "cookies").Value.ToString() ??
+                            string.Empty); //todo wrong?
+                        break;
+                }
 
-            return response.Content.Contains(test.Expected);
+                return response.Content.Contains(test.Expected);
+            }
+            catch (Exception e) //todo pass exception object with tuple
+            {
+                return false;
+            }
+            
         }
 
         public async Task<bool> PerformRequestAsync(Test test) => await perform(test);
