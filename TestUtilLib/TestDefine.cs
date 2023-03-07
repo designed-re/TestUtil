@@ -14,6 +14,9 @@ namespace TestUtilLib
     {
         [JsonProperty("tests")]
         public List<Test> Tests { get; set; }
+
+        [JsonProperty("base_url")]
+        public string BaseURL { get; set; }
     }
 
     public class Test
@@ -41,7 +44,7 @@ namespace TestUtilLib
         /// Action for next Test
         /// </summary>
         [JsonProperty("action")]
-        public string Action { get; set; }
+        public ActionTypes Action { get; set; }
 
         /// <summary>
         /// Expected response, using Contains
